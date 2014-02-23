@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="user-scalable=no, width=device-width" />
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<%= csrf_meta_tags %>
+
+	<%= javascript_include_tag 'jquery' %>
+	<%= javascript_include_tag 'application'%>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
+	</script>
+	<%= stylesheet_link_tag 'application' %>
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+	<title>VIPBite</title>
+</head>
+<body>
+
+	<div id="staticHeader" class="header">
+		<div class="navigation" id="nav" data-spy="affix" data-offset-top="480">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 col-xs-12">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#VIPBiteNavBar">
+								<i class="fa fa-bars"></i>
+							</button>
+						</div>
+						<div class="logo">
+							<a href="/"><img src="/image/logo.png" alt="VIPBite Logo" id="logo"></a>
+							<p>Premiere Restaurant Savings</p>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<div class="navigation">
+							<nav class="navbar pull-right" role="navigation">
+								<div class="collapse navbar-collapse" id="VIPBiteNavBar">
+									<ul class="nav navbar-nav">
+										<li><a href="javascript:VIPBiteWeb.ScrollToTag('whoWeAre')">Who We Are</a></li>
+										<li><a href="/search">Search Restaurants</a></li>
+										<li><a href="javascript:VIPBiteWeb.ScrollToTag('contactUs')">Contact Us</a></li>
+										<li><a href="#">Login</a></li>
+									</ul>
+								</div>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="howItWork" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="centerTxt">
+						<h1>How It Works</h1>
+						<ul class="list">
+							<li>Eat at one of many VIPBite partner restaurants</li>
+							<li>Book your table & save big by being VIPBite member</li>
+							<li>Enjoy your meal, show your VIPBite app, get your discount!</li>
+						</ul>
+						<a href="#" class="button">Register Now</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%= yield %>
+
+	<div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<p>Copyright VIPBite. All rights reserved.</p>
+				</div>
+				<div class="col-md-8">
+					<ul>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Terms Of Use</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			VIPBiteWeb.SaveMenuLocation();
+			if(localStorage.getItem("scrollTo"))
+			{
+				VIPBiteWeb.ScrollToTag(localStorage.getItem("scrollTo"));
+			}
+	});
+	</script>
+</body>
+</html>
