@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  identifier: 
+  VIPBiteDeal: MyText
+  dealDetail: MyText
+  reservation: MyString
+  operatinghour: MyString
+  link: MyString
+  comment: MyText
+  imageFolder: MyString
+  urbanspoonLink: MyString
+  urbanspoonReview: MyString
+
+two:
+  identifier: 
+  VIPBiteDeal: MyText
+  dealDetail: MyText
+  reservation: MyString
+  operatinghour: MyString
+  link: MyString
+  comment: MyText
+  imageFolder: MyString
+  urbanspoonLink: MyString
+  urbanspoonReview: MyString
