@@ -1,6 +1,6 @@
 body
 {
-	background:#efefef;
+	background:#222;
 	color:#333;
 	font-family: 'lato', sans-serif;
 	font-weight:300;
@@ -25,7 +25,6 @@ h2{
 	font-size:32px;
 	line-height:26px;
 	text-transform:uppercase;
-	margin: 0px 0px 40px 0px;
 }
 
 h3{
@@ -39,6 +38,11 @@ h3{
 
 p{
 	color:#fff;
+	padding:10px 0px;
+}
+
+a{
+	color:#4aaddb;
 }
 
 a:hover{
@@ -54,6 +58,10 @@ a:hover{
 	font-size:20px;
 }
 
+.button:hover{
+	background:#4badda;
+}
+
 .centerTxt{
 	text-align:center;
 }
@@ -63,7 +71,7 @@ a:hover{
 .header
 {
 	background: url(/image/backgrounds/header.jpg) fixed;
-	min-height: 800px;
+	min-height:1000px;
 	padding:30px 0px;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -77,7 +85,7 @@ a:hover{
 	font-weight:300;
 	font-style:normal;
 	text-transform:uppercase;
-	margin:30px 0px 30px 0px;
+	margin:150px 0px 30px 0px;
 }
 
 .header .list{
@@ -94,6 +102,16 @@ a:hover{
 .subHead{
 	min-height:200px;
 	background: url(/image/backgrounds/who-we-are.jpg) fixed;
+}
+
+.subheadh1{
+	line-height:160px;
+	color:#fff;
+}
+
+.blank{
+	background: #222;
+	min-height:200px;
 }
 
 .black-bar{
@@ -149,7 +167,7 @@ a:hover{
 	padding-left:0px;
 	text-transform:uppercase;
 	line-height:50px;
-	font-family: 'lato', sans-serif;
+	font-family: 'lato', sans-serif;	
 	font-style: normal;
 	font-weight: 300;
 	letter-spacing:1px;
@@ -179,6 +197,10 @@ a:hover{
 .white{
 	padding:40px 0px;
 	background:#fff;
+}
+
+.login{
+	padding:40px 0px;
 }
 
 .white p{
@@ -256,6 +278,10 @@ a:hover{
 	background:#fff;
 }
 
+.whiteBG p{
+	color:#333;
+}
+
 .searchBG{
 	background:#000;
 	border-left:10px #4aaddb solid;
@@ -291,6 +317,17 @@ a:hover{
 	color:#333;
 }
 
+.sideBar ul{
+	margin-left:0px;
+	padding-left:20px;
+	margin:0px;
+	list-style-type:square;
+}
+
+.sideBar h2{
+	margin: 20px 0px;
+}
+
 .promotion{
 	margin-top:10px;
 }
@@ -307,7 +344,6 @@ a:hover{
 
 .searchItem{
 	margin-bottom:20px;
-	min-height: 470px;
 }
 
 /*Google Map*/
@@ -317,7 +353,71 @@ a:hover{
 }
 
 .mapCanvas{
- width: 100% !important;
- min-height: 700px;
- position: absolute;
+ width:100%!important;
+ height:100%;
+ position:absolute;
+}
+
+.pad-top{
+	padding-top:40px;
+}
+
+/*Profile*/
+
+.profileLogo{
+	margin-bottom:40px;
+}
+
+.details{
+	margin: 30px 0px 0px 0px;
+	list-style-type:none;
+	padding-left:0px;
+}
+
+.urbanSpoon{
+	margin:30px 0px 30px 0px;
+}
+
+.urbanSpoon img{
+	margin-top:20px;
+}
+
+.rating{
+	float:right;
+	font-size:26px;
+	padding:30px;
+	background:#efefef;
+	overflow:hidden;
+}
+
+.promotionDeal{
+	margin-top:30px;
+	padding:15px;
+	border:3px solid #4badda;
+	overflow:hidden;
+}
+
+.promotionDeal a span{
+	color:#333;
+}
+
+.map-box{
+	margin-top:30px;
+}
+
+.imageGallery{
+	overflow:hidden;
+	margin-bottom:10px;
+}
+
+.imageItem{
+	width:100%;
+	overflow:hidden;
+	height:260px;
+	text-align:center;
+}
+
+
+.clear{
+	clear:both;
 }

@@ -6,6 +6,10 @@
 		min-height:620px!important;
 	}
 	
+	.subHead{
+		min-height:200px;
+	}
+	
 	.logo{
 		text-align:center!important;
 	}
@@ -90,6 +94,10 @@
 	
 	.footer ul li{
 		display:block;
+	}
+	
+	.imageItem{
+		margin-bottom:30px;
 	}
 }
 	
