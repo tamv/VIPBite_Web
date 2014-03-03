@@ -3,7 +3,7 @@ development:
   port: 5433
   adapter: postgresql
   encoding: unicode
-  database: Design&Implement
+  database: VIPBite_WareHouse
   pool: 5
   username: postgres
   password: masterkey

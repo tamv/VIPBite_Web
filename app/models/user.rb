@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
 	attr_accessible :userId, :userEmail, :firstname, :lastname, :password, :expDate, :isAdmin
 
-	def Authenticate(login, pwd)
+	def self.Authenticate(login, pwd)
 		user = User.find_by_userEmail(login);
 
 		if(!user.nil?)
@@ -34,13 +34,22 @@ class User < ActiveRecord::Base
 		end
 	end
 
-	def AddNewUser(firstname, lastname, email, pwd)
-		userguid = SecureRandom.urlsafe_base64(16, false);
-		encryptPwd = BCrypt::Password.create(pwd);
+		def self.AddNewUser(param)
+		user = User.find_by_userEmail(param[:userEmail])
 
-		self.create(:userId => userguid, useremail: => email,
-								:firstname => firstname, :lastname => lastname,
-								:password => encryptPwd, :isAdmin => false, :expDate => Time.now.to_date.to_s);
+		if(user.nil?)
+			if(param[:userId].nil?)
+				userguid = SecureRandom.urlsafe_base64(16, false);
+			else
+				userguid = param[:userId];
+			end
+
+			encryptPwd = BCrypt::Password.create(param[:password]);
+
+			User.create(:userId => userguid, :userEmail => param[:userEmail],
+									:firstname => param[:firstname], :lastname => param[:lastname],
+									:password => encryptPwd, :isAdmin => param[:isAdmin], :expDate => [:expDate]);
+		end
 	end
 
 	def DeleteUser(email)
@@ -73,8 +82,7 @@ class User < ActiveRecord::Base
 		user = User.find_by_userId(id);
 
 		if(!user.nil?)
-			encrypt = BCrypt::Password.create(newPwd); if(newPwd);
-
+			encrypt = BCrypt::Password.create(newPwd) if(newPwd != nil);
 			user.userEmail = newLogin if(newLogin != nil);
 			user.password = encrypt if(newPwd != nil);
 			user.save;

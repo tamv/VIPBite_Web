@@ -1,7 +1,7 @@
 class CreateRestaurants < ActiveRecord::Migration
   def change
-    create_table :restaurants do |t|
-      t.serial    :identifier
+    create_table :restaurants, identifier: :serial do |t|
+      t.integer    :identifier
       t.string    :name
       t.string    :address
       t.string    :city

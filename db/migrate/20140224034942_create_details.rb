@@ -1,7 +1,7 @@
 class CreateDetails < ActiveRecord::Migration
   def change
-    create_table :details do |t|
-      t.serial    :identifier
+    create_table :details, identifier: :serial do |t|
+      t.integer   :identifier
       t.text      :VIPBiteDeal
       t.text      :dealDetail
       t.string    :reservation

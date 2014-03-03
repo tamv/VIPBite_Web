@@ -1,2 +1,46 @@
-<h1>Home#login</h1>
-<p>Find me in app/views/home/login.html.erb</p>
+<div class="whiteBG">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<h1>Login</h1>
+			</div>
+			<div class="col-md-5">
+				<div class="searchBG">
+					<h2>Not a member? <a href="register.html">Register Here!</a></h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-7">
+				<%= form_tag(controller: 'home', action: 'login', method: 'post') do %>
+					<%= email_field_tag('email', params[:email], maxlength: 30, placeholder: "email") %>
+					<%= password_field_tag('password', nil, maxlength: 20, placeholder: "password") %>
+					<span class="remember">
+						<%= check_box_tag('remme', false, nil) %> Remember Me
+					</span>
+					<%= submit_tag('Login', :class => "submit")%>
+				<% end %>
+				<a href="/forgotpwd" class="pull-left">Forgot your password</a>
+			</div>
+			<div class="col-md-5">
+				<div class="sideBar">
+					<h2>How it Work</h2>
+					<ul>
+						<li>Eat at one of many VIPbite partner restaurants</li>
+						<li>Book your table & save big by being a VIPbite member</li>
+						<li>Enjoy your meal, show your VIPbite app, get your discount!</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+</div>
+<script>
+	$(window).bind("load", function() {
+			$(window).resize(function () {
+				$("#gmContainer").height($("#restaurantSearch").height())
+			})
+			$("#howItWork").hide();
+			$("#staticHeader").addClass("subHead");
+			initialize_withLoc()
+		})
+</script>

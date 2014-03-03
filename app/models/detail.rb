@@ -1,21 +1,21 @@
 class Detail < ActiveRecord::Base
-	attr_accessible :identifier, :VPBiteDeal, :dealDetail, :reservation, :operatinghour, :link,
+	attr_accessible :identifier, :VIPBiteDeal, :dealDetail, :reservation, :operatinghour, :link,
 						:comment, :imageFolder, :urbanspoonLink, :urbanspoonReview;
 
-	def AddDetail(params)
-		remove = Detail.find_by(detailId: params[:Id])
+	def self.AddDetail(params)
+		remove = Detail.find_by(identifier: params[:identifier])
 		remove.destroy if (remove != nil)
 
 		Detail.create(
-			:identifier					=> params[:Id],
-			:VIPBiteDeal				=> params[:promo_Name],
-			:dealDetail					=> params[:detail],
+			:identifier					=> params[:identifier],
+			:VIPBiteDeal				=> params[:VIPBiteDeal],
+			:dealDetail					=> params[:dealdetail],
 			:reservation				=> params[:reservation],
 			:operatinghour			=> params[:storehour],
-			:link								=> params[:restaurantLink],
-			:comment						=> params[:extracomment],
-			:imageFolder				=> params[:imagesFolder],
+			:link								=> params[:link],
+			:comment						=> params[:comment],
+			:imageFolder				=> params[:imageFolder],
 			:urbanspoonLink			=> params[:urbanspoonlink],
-			:urbanspoonReview		=> params[:reviewpercentage])
+			:urbanspoonReview		=> params[:urbanspoonReview])
 	end
 end

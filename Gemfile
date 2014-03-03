@@ -35,7 +35,7 @@ gem 'activemerchant'
 
 gem 'rails_12factor', group: :production
 
-gem 'seedbank', "~>0.3.0.pre"
+gem 'seedbank'
 
 gem 'bcrypt-ruby'
 

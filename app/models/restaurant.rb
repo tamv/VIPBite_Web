@@ -1,10 +1,10 @@
 class Restaurant < ActiveRecord::Base
 	require 'geocoder'
 
-	attr_accessible :identifier, :name. :address, :city, :province, :postal, :imageUrl, :email,
-							:phone, :VIPBiteDeal, :longitude, :latitude, :detailId, :search, :modifiedDate;
+	attr_accessible :identifier, :name, :address, :city, :province, :postal, :imageUrl, :email, :phone,
+									:VIPBiteDeal, :longitude, :latitude, :detailId, :search, :modifiedDate;
 
-	def NewRestaurant(params)
+	def self.NewRestaurant(params)
 		remove = Restaurant.find_by(name: params[:restaurantname]);
 		remove.destroy if(remove != nil);
 		
@@ -12,19 +12,20 @@ class Restaurant < ActiveRecord::Base
 		latlong = Geocoder.search(fullAddress);
 
 		newRest = Restaurant.create(
-			:name					=> params[:restaurantname],
+			:identidier		=> params[:identifier],
+			:name					=> params[:name],
 			:address			=> fullAddress,
 			:city					=> params[:city],
 			:province			=> params[:province],
 			:postal				=> params[:postal],
 			:imageUrl			=> params[:imageUrl],
 			:email				=> params[:email],
-			:phone				=> pramas[:phone],
-			:VIPBiteDeal	=> params[:dealName],
-			:latitude			=> latlong[0].latitude,
-			:longiture		=> latlong[0].longitude,
+			:phone				=> params[:phone],
+			:VIPBiteDeal	=> params[:vipbitedeal],
 			:detailId			=> params[:detailId],
-			:search				=> params[:tags],
-			:modifiedDate	=> params[:dateInsert]);
+			:search				=> params[:search],
+			:modifiedDate	=> params[:modifiedDate],
+			:latitude			=> latlong[0].latitude,
+			:longiture		=> latlong[0].longitude);
 	end
 end
