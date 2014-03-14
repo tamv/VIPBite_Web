@@ -1,2 +1,50 @@
-<h1>User#account</h1>
-<p>Find me in app/views/user/account.html.erb</p>
+<div class="whiteBG">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<h1>My Account</h1>
+				<h2>User Name</h2>
+
+				<br/>
+
+				<ul class="validation">
+					<li>
+						<strong>Account Status:</strong>
+						<li class="active">
+							<i class="fa fa-check"> </i>
+							change icon appropriately.<br/>
+							Active Until/Exp on:<span class="date">DateTime</span>
+						</li>
+					</li>
+				</ul>
+				<br/>
+
+				<div>
+					<h3>Want to renew your subscription?</h3>
+					<a href="#" class="submit pull-left">Renew Membership</a>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="searchBG">ChangePassword</div>
+				<br/>
+				<form><!-- Rails Form-->
+					<input name="currentpassword" type="text" placeholder="Current Password" />
+					<input name="newpassowrd" type="text" placeholder="New Password" />
+					<input name="confirmnewpassword" type="text" placeholder="Confirm Password" />
+					<input type="submit" name="submit" value="Submit" class="submit" /> 
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(window).bind("load", function() {
+			$(window).resize(function () {
+				$("#gmContainer").height($("#restaurantSearch").height())
+			})
+			$("#howItWork").hide();
+			$("#staticHeader").addClass("subHead");
+			initialize_withLoc()
+		})
+</script>

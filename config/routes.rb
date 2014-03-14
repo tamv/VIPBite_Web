@@ -7,6 +7,7 @@ VIPBiteWeb::Application.routes.draw do
 	match '/register',								:to	=>	'user#register',			via: [:get, :post]
 	match '/termofused',							:to	=>	'home#termofused',		via: [:get, :post]
 	match '/privacy',									:to	=>	'home#privacy',				via: [:get, :post]
+	match '/account',									:to	=>	'user#account',				via: [:get, :post]
 
 	match '/mobile/login',						:to	=>	'mobile#login',				via: [:get, :post]
 	match '/mobile/browse',						:to	=>	'mobile#browse',			via: [:get, :post]
