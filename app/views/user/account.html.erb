@@ -3,36 +3,42 @@
 		<div class="row">
 			<div class="col-md-7">
 				<h1>My Account</h1>
-				<h2>User Name</h2>
+				<h2><%= @userInfo.firstname %>&nbsp<%= @userInfo.lastname %></h2>
 
 				<br/>
 
 				<ul class="validation">
-					<li>
-						<strong>Account Status:</strong>
-						<li class="active">
+					<li><strong>Account Status:</strong></li>
+					<li class="active">
+						<% if(@userInfo.expDate <= Time.now) %>
+							<i class="fa fa-times"></i>
+							Expire On: <span class="date"><%= @userInfo.expDate.strftime("%B %d %Y") %></span>
+						<% else %>
 							<i class="fa fa-check"> </i>
-							change icon appropriately.<br/>
-							Active Until/Exp on:<span class="date">DateTime</span>
-						</li>
+							Active Until:<span class="date"><%= @userInfo.expDate.strftime("%B %d %Y")  %></span>
+						<% end %>
 					</li>
 				</ul>
 				<br/>
 
 				<div>
 					<h3>Want to renew your subscription?</h3>
-					<a href="#" class="submit pull-left">Renew Membership</a>
+					<a href="/renew" class="submit pull-left">Renew Membership</a>
+					<a href="/logout" class="submit pull-left" style="margin-left: 10px;">LogOut</a>
 				</div>
 			</div>
 			<div class="col-md-5">
 				<div class="searchBG">ChangePassword</div>
 				<br/>
-				<form><!-- Rails Form-->
-					<input name="currentpassword" type="text" placeholder="Current Password" />
-					<input name="newpassowrd" type="text" placeholder="New Password" />
-					<input name="confirmnewpassword" type="text" placeholder="Confirm Password" />
-					<input type="submit" name="submit" value="Submit" class="submit" /> 
-				</form>
+				<%= form_tag ({:controller => 'user', :action => 'account', :method => "post"}), ({:id => 'updateForm'}) do %>
+					<%= password_field_tag('currentpwd', nil, maxlength:20, size: 30,
+											:class=>"registrationInput", placeholder: "current password", required: "required") %>
+					<%= password_field_tag('newpwd', nil, maxlength:20, size: 30,
+											:class=>"registrationInput", placeholder: "new password", required: "required") %>
+					<%= password_field_tag('cfm_newpwd', nil, maxlength:20, size: 30,
+											:class=>"registrationInput", placeholder: "confirm new password", required: "required") %>
+					<%= submit_tag('UPDATE', :class=>"submit") %>
+				<% end %>
 			</div>
 		</div>
 	</div>
@@ -40,11 +46,8 @@
 
 <script>
 	$(window).bind("load", function() {
-			$(window).resize(function () {
-				$("#gmContainer").height($("#restaurantSearch").height())
-			})
 			$("#howItWork").hide();
 			$("#staticHeader").addClass("subHead");
-			initialize_withLoc()
+			$("#regisForm").validate();
 		})
 </script>

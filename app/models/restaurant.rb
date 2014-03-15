@@ -12,7 +12,7 @@ class Restaurant < ActiveRecord::Base
 		latlong = Geocoder.search(fullAddress);
 
 		newRest = Restaurant.create(
-			:identidier		=> params[:identifier],
+			:identifier		=> params[:identifier],
 			:name					=> params[:name],
 			:address			=> fullAddress,
 			:city					=> params[:city],

@@ -48,11 +48,14 @@ class User < ActiveRecord::Base
 
 			User.create(:userId => userguid, :userEmail => param[:userEmail],
 									:firstname => param[:firstname], :lastname => param[:lastname],
-									:password => encryptPwd, :isAdmin => param[:isAdmin], :expDate => [:expDate]);
+									:password => encryptPwd, :isAdmin => param[:isAdmin], :expDate => param[:expDate]);
+			return true;
+		else
+			return false;
 		end
 	end
 
-	def DeleteUser(email)
+	def self.DeleteUser(email)
 		user = User.find_by_userEmail(email);
 
 		if(!user.nil?)
@@ -60,7 +63,7 @@ class User < ActiveRecord::Base
 		end
 	end
 
-	def UpdateExpDate(email, extentionType, billingAddress)
+	def self.UpdateExpDate(email, extentionType, billingAddress)
 		user = User.find_by_userEmail(email);
 
 		if(!user.nil?)
@@ -72,13 +75,13 @@ class User < ActiveRecord::Base
 				user.update(:expDate => renew);
 			end
 
-			Transactions.create(
+			Transaction.create(
 						:identifier => SecureRandom.urlsafe_base64(16, false), :userId => user.userId,
 						:subscription => extentionType.to_s, :billingAddress => billingAddress);
 		end
 	end
 
-	def UpdateUserInfo(id, newLogin, newPwd)
+	def self.UpdateUserInfo(id, newLogin, newPwd)
 		user = User.find_by_userId(id);
 
 		if(!user.nil?)

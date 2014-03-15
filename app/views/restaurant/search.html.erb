@@ -1,6 +1,6 @@
 <div class="whiteBG">
 	<div class="container">
-		<div class="row">
+		<div id="searchRestaurant" class="row">
 			<div class="col-md-7">
 				<h1>Restaurant Search</h1>
 			</div>
@@ -20,18 +20,41 @@
 		</div>
 		<div class="col-md-offset-7 col-md-5">
 			<div class="sideBar">
-				<!-- convert to rails form -->
-				<form>
-					<input type="text" placeholder="Search" class="search"/>
-					<input type="submit" value="submit" class="submit"/>
-				</form>
+				<%= form_tag(controller: 'restaurant', action: 'search', method: 'post') do %>
+					<%= text_field_tag('search', params[:search], maxlength: 20, placeholder: 'search', :class => "search") %>
+					<%= submit_tag('Find', :class => "submit") %>
+				<% end %>
 			</div>
 			<div class="listBG">
 				<h2>Restaurants</h2>
 			</div>
 			<div class="sideBar">
-				<div id="searchResult" class="row searchItem">
-					TEST
+				<div id="searchResult" style="height: 450px; overflow:scroll">
+					<% if (nil != @searchResult) %>
+						<% @searchResult.each do |result| %>
+							<div class="row searchItem">
+								<div class="col-md-4">
+									<%= link_to image_tag('/image/restaurant logo/' << result.imageUrl, style:"width:100%; height:100%; align:middle"), {controller: 'restaurant', action: 'detail', restaurant: result.identifier, method: 'post'}, :target => "_blank" %>
+								</div>
+								<div class="col-md-8">
+									<h3><%= result.name %></h3>
+									<ul class="listDetails">
+										<li><%= result.search %></li>
+										<li><%= result.phone %></li>
+										<li><%= result.address %></li>
+									</ul>
+								</div>
+								<div class="col-md-12">
+									<div class="promotion">
+										<p>
+											<span>Current Promotion:</span>
+											<%= result.VIPBiteDeal %>
+										</p>
+									</div>
+								</div>
+							</div>
+						<% end %>
+					<% end %>
 				</div>
 			</div>
 		</div>
@@ -69,11 +92,10 @@
 	};
 
 	$(window).bind("load", function() {
-		$(window).resize(function () {
-			$("#gmContainer").height($("#restaurantSearch").height())
-		})
 		$("#howItWork").hide();
 		$("#staticHeader").addClass("subHead");
-		initialize_withLoc()
+		$("#gmContainer").height($("#restaurantSearch").height());
+		initialize_withLoc();
+		$('html, body').animate({ scrollTop: $("#searchRestaurant").offset().top}, 500);
 	})
 </script>

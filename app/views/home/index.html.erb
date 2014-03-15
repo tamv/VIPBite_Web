@@ -56,13 +56,12 @@
 				<iframe width="100%" height="190" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.ca/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=1053+10th+Street+Southwest,+Calgary,+AB&amp;aq=0&amp;oq=1053+10th&amp;sll=49.891235,-97.15369&amp;sspn=35.549908,73.476563&amp;ie=UTF8&amp;hq=&amp;hnear=1053+10+St+SW,+Calgary,+Alberta+T2E+7A4&amp;t=m&amp;z=14&amp;ll=51.043491,-114.086512&amp;output=embed"></iframe><br /><br />
 			</div>
 			<div class="col-md-6">
-				<!-- Convert to RAIL Form Call -->
-				<form>
-					<input type="text" placeholder="name">
-					<input type="text" placeholder="email">
-					<input type="text" placeholder="address">
-					<input type="submit" class="submit">
-				</form>
+				<%= form_tag(controller: 'home', action:'contactus', method: 'post') do %>
+					<%= text_field_tag('name', params[:username], maxlength: 40, placeholder: "name") %>
+					<%= email_field_tag('email', params[:email], maxlength: 30, placeholder: "email") %>
+					<%= text_field_tag('address', params[:address], maxlength:30, placeholder: "address") %>
+					<%= submit_tag('Submit', :class => "submit") %>
+				<% end %>
 			</div>
 		</div>
 

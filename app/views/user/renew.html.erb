@@ -1,2 +1,76 @@
-<h1>User#renew</h1>
-<p>Find me in app/views/user/renew.html.erb</p>
+<div class="whiteBG">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<h1>Renew <i style="color: red;"><%= flash[:warning] %></i></h1>
+			</div>
+			<div class="col-md-5">
+				<div class="searchBG">
+					<h2>Already a membber? <a href="/login">Login Here!</a></h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="row">
+				<div class="col-md-7">
+					<section class="registerForm">
+						<%= form_tag ({:controller => 'user', :action => 'renew', :method => "post"}), ({:id => 'renewForm'}) do %>
+							<h4 class="">Payment &amp; Billing Information</h4>
+							<div class="inputLabel">Length:</div>
+							<div class="clear"></div>
+							<%= radio_button_tag('memberType', '6months', :class=>"registrationInput") %>
+							<%= label_tag('memberType_6months', '6months') %>
+							<%= radio_button_tag('memberType', '12months', :class=>"registrationInput") %>
+							<%= label_tag('memberType_6months', '12months') %>
+							<%= text_field_tag('noc_firstname', params[:noc_firstname] || nil, maxlength: 30, size: 30, 
+											:class=>"registrationInput", placeholder: "firstname on card", required: "required") %>
+							<%= text_field_tag('noc_lastname', params[:noc_lastname] || nil, maxlength: 30, size: 30, 
+											:class=>"registrationInput", placeholder: "Lastname on card", required: "required") %>
+							<div class="inputLabel">Select Card:</div>
+							<%= select_tag('cardtype', options_for_select(["VISA", "MASTERCARD", "AMERICANEXP"]),
+											:class=>"registrationInput") %>
+							<%= text_field_tag('cardno', nil, maxlength: 20, size: 30,
+											:class=>"registrationInput", placeholder: "Card No.", required: "required")%>
+							<%= text_field_tag('exp_month', nil, maxlength: 2, :size=> 2,
+											:class=>"registrationInput", placeholder: "MM", required: "required")%>
+							<%= text_field_tag('exp_year', nil, maxlength: 4, :size => 4,
+											:class=>"registrationInput", placeholder: "YYYY", required: "required")%>
+							<%= password_field_tag('cvv', nil, maxlength: 3, :size=> 30,
+											:class=>"registrationInput", placeholder: "CVV", required: "required")%>
+							<%= text_field_tag('unitno', params[:unitno] || nil, maxlength: 60, size: 30,
+											:class=>"registrationInput", placeholder: "Unit No.", required: "required")%>
+							<%= text_field_tag('address', params[:address] || nil, maxlength: 60, size: 30, 
+											:class=>"registrationInput", placeholder: "address", required: "required") %>
+							<%= text_field_tag('city', params[:city] || nil, maxlength: 20, size: 30,
+											:class=>"registrationInput", placeholder: "city", required: "required") %>
+							<div class="inputLabel">Select Province:</div>
+							<%= select_tag('prov', options_for_select(["AB", "BC"]), :class=>"registrationInput") %>
+							<%= text_field_tag('postal', params[:postal] || nil, maxlength: 7, size: 30,
+											:class=>"registrationInput", placeholder: "postal", required: "required") %>
+							<%= text_field_tag('phone', params[:phone] || nil, maxlength: 11, size: 30,
+											:class=>"registrationInput", placeholder: "phone no.", required: "required") %>
+							<%= submit_tag('renew', :class=>"submit") %>
+						<% end %>
+					</section>
+				</div>
+				<div class="col-md-5">
+					<div class="sideBar">
+						<h2>How It Works</h2>
+						<ul>
+							<li>Eat at one of many VIPbite partner restaurants</li>
+							<li>Book your table & save big by being a VIPbite member</li>
+							<li>Enjoy your meal, show your VIPbite app, get your discount!</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(window).bind("load", function() {
+			$("#howItWork").hide();
+			$("#staticHeader").addClass("subHead");
+			$("#renewForm").validate();
+		})
+</script>

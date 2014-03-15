@@ -4,14 +4,16 @@ class Transaction < ActiveRecord::Base
 
 	attr_accessible :identifier, :userId, :subscription, :billingAddress
 
-	def BillingAddress(params)
+	def self.BillingAddress(params)
 		{ :name => params[:firstname] + params[:lastname], :address1 => params[:address],
 			:city => params[:city], :state => params[:province],
 			:country => "CA", :zip => params[:postal]
 		}
 	end
 
-	def PurchaseSubscription(params)
+	def self.PurchaseSubscription(params)
+		ActiveMerchant::Billing::Base.mode = :test;
+
 		creditCard = ActiveMerchant::Billing::CreditCard.new(
 			:brand								=> params[:cardtype],
 			:number								=> params[:cardno],
@@ -24,10 +26,20 @@ class Transaction < ActiveRecord::Base
 		billing = BillingAddress(params);
 
 		if(creditCard.valid?)
-			response = GATEWAY.purchase(params[:price], creditCard, :ip => params[:ipAddress],
+			paypalGateWay = ActiveMerchant::Billing::PaypalGateway.new(
+			:login => "vipbiteseller_api1.gmail.com",
+			:password => "1379234540",
+			:signature => "AjKIh-hQEeSMtF189H7EuPdDcz.5AfXyK9PEfe07f4KMyb2t0-32fx9t");
+
+			response = paypalGateWay.authorize(params[:price], creditCard, :ip => params[:ipAddress],
 				:billing_address => billing);
 
-			return {conplete: response.success?, :message => response.message};
+			if response.success?
+				paypalGateWay.capture(params[:price], response.authorization);
+				return {complete: response.success?};
+			else
+				return {conplete: response.success?, :message => response.message};
+			end
 		else
 			return nil;
 		end

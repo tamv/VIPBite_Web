@@ -3,11 +3,15 @@ VIPBiteWeb::Application.routes.draw do
 
 	match '/search',									:to	=>	'restaurant#search',	via: [:get, :post]
 	match '/login',										:to	=>	'home#login',					via: [:get, :post]
+	match '/logout',									:to	=>	'home#logout',				via: [:get, :post]
 	match '/forgotpwd',								:to	=>	'user#recovery',			via: [:get, :post]
 	match '/register',								:to	=>	'user#register',			via: [:get, :post]
 	match '/termofused',							:to	=>	'home#termofused',		via: [:get, :post]
 	match '/privacy',									:to	=>	'home#privacy',				via: [:get, :post]
 	match '/account',									:to	=>	'user#account',				via: [:get, :post]
+	match '/contactus',								:to	=>	'home#contactus',			via: [:post]
+	match '/detail',									:to	=>	'restaurant#detail',	via: [:get, :post]
+	match '/renew',										:to	=>	'user#renew',					via: [:get, :post]
 
 	match '/mobile/login',						:to	=>	'mobile#login',				via: [:get, :post]
 	match '/mobile/browse',						:to	=>	'mobile#browse',			via: [:get, :post]

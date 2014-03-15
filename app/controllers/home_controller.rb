@@ -10,11 +10,11 @@ class HomeController < ApplicationController
 			inputEmail	= params[:email];
 			inputPwd		= params[:password];
 
-			loginUsr = User.Authenticate(inputEmail, inputPwd)
+			loginUsr = User.Authenticate(inputEmail, inputPwd);
 
 			if(loginUsr != nil)
   			signIn(loginUsr);
-				redirect_to("/myaccount") and return;
+				redirect_to("/account") and return;
 			else
 				redirect_to("/register") and return;
 			end
@@ -22,12 +22,16 @@ class HomeController < ApplicationController
 	end
 
 	def logout
+		cookies.delete(:user);
 	end
 
 	def index
 	end
 
 	def termofused
+	end
+
+	def contactus
 	end
 
 	private

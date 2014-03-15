@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-7">
-				<h1>Register</h1>
+				<h1>Register <i style="color: red;"><%= flash[:warning] %></i></h1>
 			</div>
 			<div class="col-md-5">
 				<div class="searchBG">
@@ -13,57 +13,56 @@
 		<div class="row">
 			<div class="row">
 				<div class="col-md-7">
-					<section clas="registerForm">
-						<form>
-							<input class="registrationInput" id="firstName" maxlength="30" name="firstName" size="30" type="text" placeholder="First Name" />
-							<input class="registrationInput" id="lastName" maxlength="30" name="lastName" size="30" type="text" placeholder="Last Name" />
-							<div class="inputLabel">
-								Select Title:
-							</div>
-							<select class="registrationInput" id="userTitle" name="userTitle"><option value="MR.">MR.</option>
-								<option value="MRs.">MRs.</option>
-								<option value="MS.">MS.</option>
-							</select>
-							<input class="registrationInput" id="email" maxlength="30" name="email" size="30" type="email" placeholder="Email" />
-							<input class="registrationInput" id="password" maxlength="20" name="password" size="30" type="password" placeholder="Password" />
-							<input class="registrationInput" id="cfm_password" maxlength="20" name="cfm_password" size="30" type="password" placeholder="Confirm Password" />
+					<section class="registerForm">
+						<%= form_tag ({:controller => 'user', :action => 'register', :method => "post"}), ({:id => 'regisForm'}) do %>
+							<%= text_field_tag('firstName', params[:firstName] || nil, maxlength: 30, size: 30,
+											:class=>"registrationInput", placeholder: "first name", required: "required") %>
+							<%= text_field_tag('lastName', params[:lastName] || nil, maxlength: 30, size: 30, 
+											:class=>"registrationInput", placeholder: "last name", required: "required") %>
+							<div class="inputLabel">Select Title:</div>
+							<%= select_tag('userTitle', options_for_select(["MR.", "MRs.", "MS."]), :class=>"registrationInput") %>
+							<%= email_field_tag('email', params[:email] || nil, maxlength: 30, size: 30,
+											:class=>"registrationInput", placeholder: "Email", required: "required") %>
+							<%= password_field_tag('password', nil, maxlength:20, size: 30,
+											:class=>"registrationInput", placeholder: "password", required: "required") %>
+							<%= password_field_tag('cfm_password', nil, maxlength:20, size: 30,
+											:class=>"registrationInput", placeholder: "password", required: "required") %>
 							<h4 class="">Payment &amp; Billing Information</h4>
-							<div class="inputLabel">
-								Length:
-							</div>
+							<div class="inputLabel">Length:</div>
 							<div class="clear"></div>
-							<input id="memberType_6months" class="form-radio" name="memberType" type="radio" value="6months" /><label for="memberType_6months">6 Months</label>
-							<input id="memberType_12months" class="form-radio" name="memberType" type="radio" value="12months" />	<label for="memberType_12months">12 Months</label>
-							<input class="registrationInput" id="noc_firstname" maxlength="30" name="noc_firstname" placeholder="First Name" size="30" type="text" /></td>
-							<input class="registrationInput" id="noc_lastname" maxlength="30" name="noc_lastname" placeholder="Last Name" size="30" type="text" /></td>
-							<div class="inputLabel">
-								Select Card:
-							</div>
-							<select class="registrationInput" id="cardtype" name="cardtype"><option value="VISA">VISA</option>
-								<option value="MASTERCARD">MASTERCARD</option>
-								<option value="AMERICANEXP">AMERICANEXP</option>
-							</select>
-							<input class="registrationInput" id="cardno" maxlength="20" name="cardno" size="30" type="text" placeholder="Card Number" />
-							<input class="registrationInput" id="exp_month" maxlength="2" name="exp_month" placeholder="MM" size="2" type="text" />
-							<input class="registrationInput" id="exp_year" maxlength="4" name="exp_year" placeholder="YYYY" size="4" type="text" />
-						
-							<input class="registrationInput" id="cvv" maxlength="3" name="cvv" size="30" type="password" placeholder="CVV" />
-					
-							<input class="registrationInput" id="unitno" maxlength="60" name="unitno" size="30" type="text" placeholder="Unit Number" />
-							<input class="registrationInput" id="address" maxlength="60" name="address" size="30" type="text" placeholder="Address" />
-						
-							<input class="registrationInput" id="city" maxlength="20" name="city" size="30" type="text" placeholder="City" />
-							<div class="inputLabel">
-								Select Province:
-							</div>
-							<select class="registrationInput" id="prov" name="prov">
-								<option value="AB">AB</option>
-								<option value="BC">BC</option></select>
-					
-							<input class="registrationInput" id="postal" maxlength="7" name="postal" size="30" type="text" placeholder="Postal Code" />
-							<input class="registrationInput" id="phone" maxlength="11" name="phone" size="30" type="text" placeholder="Phone Number" />
-							<input class="submit" name="commit" type="submit" value="Register" /></span>
-						</form>
+							<%= radio_button_tag('memberType', '6months', :class=>"registrationInput") %>
+							<%= label_tag('memberType_6months', '6months') %>
+							<%= radio_button_tag('memberType', '12months', :class=>"registrationInput") %>
+							<%= label_tag('memberType_6months', '12months') %>
+							<%= text_field_tag('noc_firstname', params[:noc_firstname] || nil, maxlength: 30, size: 30, 
+											:class=>"registrationInput", placeholder: "firstname on card", required: "required") %>
+							<%= text_field_tag('noc_lastname', params[:noc_lastname] || nil, maxlength: 30, size: 30, 
+											:class=>"registrationInput", placeholder: "Lastname on card", required: "required") %>
+							<div class="inputLabel">Select Card:</div>
+							<%= select_tag('cardtype', options_for_select(["VISA", "MASTERCARD", "AMERICANEXP"]),
+											:class=>"registrationInput") %>
+							<%= text_field_tag('cardno', nil, maxlength: 20, size: 30,
+											:class=>"registrationInput", placeholder: "Card No.", required: "required")%>
+							<%= text_field_tag('exp_month', nil, maxlength: 2, :size=> 2,
+											:class=>"registrationInput", placeholder: "MM", required: "required")%>
+							<%= text_field_tag('exp_year', nil, maxlength: 4, :size => 4,
+											:class=>"registrationInput", placeholder: "YYYY", required: "required")%>
+							<%= password_field_tag('cvv', nil, maxlength: 3, :size=> 30,
+											:class=>"registrationInput", placeholder: "CVV", required: "required")%>
+							<%= text_field_tag('unitno', params[:unitno] || nil, maxlength: 60, size: 30,
+											:class=>"registrationInput", placeholder: "Unit No.", required: "required")%>
+							<%= text_field_tag('address', params[:address] || nil, maxlength: 60, size: 30, 
+											:class=>"registrationInput", placeholder: "address", required: "required") %>
+							<%= text_field_tag('city', params[:city] || nil, maxlength: 20, size: 30,
+											:class=>"registrationInput", placeholder: "city", required: "required") %>
+							<div class="inputLabel">Select Province:</div>
+							<%= select_tag('prov', options_for_select(["AB", "BC"]), :class=>"registrationInput") %>
+							<%= text_field_tag('postal', params[:postal] || nil, maxlength: 7, size: 30,
+											:class=>"registrationInput", placeholder: "postal", required: "required") %>
+							<%= text_field_tag('phone', params[:phone] || nil, maxlength: 11, size: 30,
+											:class=>"registrationInput", placeholder: "phone no.", required: "required") %>
+							<%= submit_tag('REGISTER', :class=>"submit") %>
+						<% end %>
 					</section>
 				</div>
 				<div class="col-md-5">
@@ -82,11 +81,8 @@
 </div>
 <script>
 	$(window).bind("load", function() {
-			$(window).resize(function () {
-				$("#gmContainer").height($("#restaurantSearch").height())
-			})
 			$("#howItWork").hide();
 			$("#staticHeader").addClass("subHead");
-			initialize_withLoc()
+			$("#regisForm").validate();
 		})
 </script>
