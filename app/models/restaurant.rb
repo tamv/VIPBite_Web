@@ -26,6 +26,6 @@ class Restaurant < ActiveRecord::Base
 			:search				=> params[:search],
 			:modifiedDate	=> params[:modifiedDate],
 			:latitude			=> latlong[0].latitude,
-			:longiture		=> latlong[0].longitude);
+			:longitude		=> latlong[0].longitude);
 	end
 end

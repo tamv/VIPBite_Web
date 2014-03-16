@@ -29,12 +29,14 @@
 				<h2>Restaurants</h2>
 			</div>
 			<div class="sideBar">
-				<div id="searchResult" style="height: 450px; overflow:scroll">
+				<div id="searchResult" style="height: 450px; y-overflow:scroll; x-overflow:hidden;">
 					<% if (nil != @searchResult) %>
 						<% @searchResult.each do |result| %>
 							<div class="row searchItem">
+								<input class="hidden_location" id="<%=result.name%>" type="hidden" 
+											value = '{"name": "<%=result.name%>", "image": "<%=result.imageUrl%>", "lat": <%=result.latitude%>, "lon": <%=result.longitude%>}' />
 								<div class="col-md-4">
-									<%= link_to image_tag('/image/restaurant logo/' << result.imageUrl, style:"width:100%; height:100%; align:middle"), {controller: 'restaurant', action: 'detail', restaurant: result.identifier, method: 'post'}, :target => "_blank" %>
+									<%= link_to image_tag('/image/restaurant logo/' << result.imageUrl, style:"width:100%; height:100%; align:middle"), {controller: 'restaurant', action: 'detail', name: result.name}, :target => "_blank" %>
 								</div>
 								<div class="col-md-8">
 									<h3><%= result.name %></h3>
@@ -66,29 +68,50 @@
 	{
 		var featureOpts = [{
 			stylers: [
-	        { visibility: 'simplified' }, ] },
-	        { elementType: 'labels', stylers: [ { visibility: 'off' } ] }
-	    ];
+					{ visibility: 'simplified' }, ] },
+					{ elementType: 'labels', stylers: [ { visibility: 'off' } ] }
+			];
 
 		MY_MAPTYPE_ID = 'VIPbite';
 
-	    var styledMapOptions = { name: 'VIPbite' };
-	    var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
+		var styledMapOptions = { name: 'VIPbite' };
+		var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
 
-	    var mapProperties = {
-	    	center:new google.maps.LatLng(51.0500,-114.0667),
-			zoom:13,
-			mapTypeControlOptions: { mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID] },
-			mapTypeId: MY_MAPTYPE_ID,
-			scrollwheel: false,
-			navigationControl: false,
-			mapTypeControl: false,
-			scaleControl: false,
-			draggable: false,
-	    };
+		var mapProperties = {
+			center:new google.maps.LatLng(51.0500,-114.0667),
+		zoom:13,
+		mapTypeControlOptions: { mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID] },
+		mapTypeId: MY_MAPTYPE_ID,
+		disableDefaultUI: true,
+		scrollwheel: true,
+		draggable: true,
+		};
 
-	    map = new google.maps.Map(document.getElementById("gmContainer"),mapProperties);
-	    map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+		map = new google.maps.Map(document.getElementById("gmContainer"),mapProperties);
+		map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+
+		$("input:hidden.hidden_location").each(function(){
+			var info = $.parseJSON($(this).val());
+
+			var img = document.createElement("img");
+			img.setAttribute('src', ('/image/restaurant logo/' + info.image));
+			var anchor = document.createElement("a");
+			anchor.setAttribute('href', "/detail/" + info.name);
+			anchor.innerHTML = img.outerHTML;
+
+			var divElement = document.createElement("div")
+			divElement.appendChild(anchor);
+
+			var latlong = new google.maps.LatLng(info.lat, info.lon);
+			var infowindow = new google.maps.InfoWindow({ content: divElement });
+			var marker = new google.maps.Marker({
+										position: latlong,
+										map: map,
+										title: info.name});
+			google.maps.event.addListener(marker, 'click', function() { 
+				infowindow.open(map,marker); 
+			});
+		});
 	};
 
 	$(window).bind("load", function() {
@@ -97,5 +120,5 @@
 		$("#gmContainer").height($("#restaurantSearch").height());
 		initialize_withLoc();
 		$('html, body').animate({ scrollTop: $("#searchRestaurant").offset().top}, 500);
-	})
+	});
 </script>

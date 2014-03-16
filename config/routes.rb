@@ -10,7 +10,7 @@ VIPBiteWeb::Application.routes.draw do
 	match '/privacy',									:to	=>	'home#privacy',				via: [:get, :post]
 	match '/account',									:to	=>	'user#account',				via: [:get, :post]
 	match '/contactus',								:to	=>	'home#contactus',			via: [:post]
-	match '/detail',									:to	=>	'restaurant#detail',	via: [:get, :post]
+	match '/detail/:name',						:to	=>	'restaurant#detail',	via: [:get, :post]
 	match '/renew',										:to	=>	'user#renew',					via: [:get, :post]
 
 	match '/mobile/login',						:to	=>	'mobile#login',				via: [:get, :post]

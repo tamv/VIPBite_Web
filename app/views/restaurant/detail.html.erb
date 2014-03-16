@@ -1,2 +1,109 @@
-<h1>Restaurant#detail</h1>
-<p>Find me in app/views/restaurant/detail.html.erb</p>
+<input id="latitude" type="hidden" value="<%= @lat %>"/>
+<input id="longitude" type="hidden" value="<%= @lon %>"/>
+
+<div class="subHead">
+	<dic class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="subheadh1"><%= @name %></h1>
+			</div>
+		</div>
+	</dic>
+</div>
+
+<div class="whiteBG pad-top">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="profileLogo"> <img src="/image/restaurant logo/" /> </div>
+				<h2>Details</h2>
+				<ul id="detail_Phone" class="details">
+					<li><strong>Phone:</strong></li>
+					<li><%= @phone %></li>
+					<br/>
+				</ul>
+				<ul id="detail_Hour" class="details">
+					<li><strong>Hours:</strong></li>
+					<% @hour.each do |h| %>
+						<li><%= h %></li>
+					<% end %>
+					<br/>
+				</ul>
+				<ul id="detail_Address" class="details">
+					<li><strong>Address:</strong></li>
+					<% @address.each do |a| %>
+						<li><%= a %></li>
+					<% end %>
+				</ul>
+				<ul id="detail_Website" class="details">
+					<li><strong>Website:</strong></li>
+					<li><%= @web %></li>
+					<br/>
+				</ul>
+				<ul id="detail_reservation" class="details">
+					<li><strong>Reservations:</strong></li>
+					<li><%= @reservation %></li>
+					<br/>
+				</ul>
+				<div class="urbanSpoon">
+					<a href ="#"><img src="" /></a>
+					<span class="rating>"><%= @rate %></span>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="imageGallery">
+					<div class="row">
+						@content.Image
+					</div>
+				</div>
+				<h2>VIPBite Deal</h2>
+				<div class="promotionDeal">
+					<p>@content.deal</p>
+					<a href="#" class="pull-right"><i class="fa fa-twitter"></i> <span>TWEET THIS DEAL</span></a>
+				</div>
+				<div id="gmContainer" class="map-box mapCanvas">
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function InitGoogleMap(lat, lon)
+	{
+		var featureOpts = [{
+			stylers: [
+					{ visibility: 'simplified' }, ] },
+					{ elementType: 'labels', stylers: [ { visibility: 'off' } ] }
+			];
+
+		MY_MAPTYPE_ID = 'VIPbite';
+
+		var styledMapOptions = { name: 'VIPbite' };
+		var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
+
+		var mapProperties = {
+			center:new google.maps.LatLng(51.0500,-114.0667),
+		zoom:13,
+		mapTypeControlOptions: { mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID] },
+		mapTypeId: MY_MAPTYPE_ID,
+		disableDefaultUI: true,
+		scrollwheel: false,
+		draggable: false,
+		};
+
+		map = new google.maps.Map(document.getElementById("gmContainer"),mapProperties);
+		map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+
+		var latlng = new google.maps.LatLng(lat, lon);
+		var marker = new google.maps.Marker({title: "restaurantLocation", map: map, position: latlng});
+	};
+
+	$(window).bind("load", function() {
+		$("#howItWork").hide();
+		$("#staticHeader").addClass("blank");
+
+		InitGoogleMap($("#latitude").val(), $("#longitude").val());
+	});
+</script>

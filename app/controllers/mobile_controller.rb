@@ -9,7 +9,7 @@ class MobileController < ApplicationController
 		if(userName.nil? || password.nil?)
 			render :json => {respond: nil}.to_json, :callback => params[:callback];
 		else
-			loginUser = Users.Authenticate(userName, password)
+			loginUser = User.Authenticate(userName, password)
 
 			if(loginUser.nil?)
 				render :json => {respond: nil}.to_json, :callback => params[:callback];
@@ -27,13 +27,13 @@ class MobileController < ApplicationController
 		end
 		
 		search = "%" << browseBy << "%"
-		@searchRestaurant = Restaurants.where('restaurantname ILIKE ? OR tags ILIKE ?', search, search);
+		@searchRestaurant = Restaurant.where('name ILIKE ? OR search ILIKE ?', search, search);
 
 		if(0 != @searchRestaurant.count)
 			render	:json => 
 							{
 								response: @searchRestaurant, 
-								originalUri: request.protocol + request.host_with_port + "/Image/"
+								originalUri: request.protocol + request.host_with_port + "/image/"
 							}.to_json,
 							:callback => params[:callback] and return;
 		else
@@ -48,13 +48,13 @@ class MobileController < ApplicationController
 			render :json => { response: nil }.to_json, :callback => params[:callback] and return;
 		end
 
-		rest_overView = Restaurants.find_by(restaurantname: restaurant);
+		rest_overView = Restaurant.find_by(restaurantname: restaurant);
 
 		if(rest_overView.nil?)
 			render :json => { response: nil }.to_json, :callback => params[:callback] and return;
 		end
 
-		rest_info = Details.find_by(detailId: rest_overView.detailId);
+		rest_info = Detail.find_by(detailId: rest_overView.detailId);
 
 		if(rest_info.nil?)
 			render :json => { response: nil }.to_json, :callback => params[:callback] and return;
@@ -62,7 +62,7 @@ class MobileController < ApplicationController
 
 		@Images = []
 
-		Dir.glob("public/Image/restaurant/" << rest_info.imgFolder << "/*").each do |file|
+		Dir.glob("public/image/restaurant/" << rest_info.imgFolder << "/*").each do |file|
 				@Images.push("/" << file.split('/')[2..-1].join('/'))
 		end
 
@@ -82,26 +82,23 @@ class MobileController < ApplicationController
 		maxlng = params[:longitudeMax];
 		minlng = params[:longitudeMin];
 
-		@searchRestaurant = Restaurants.where(
+		@searchRestaurant = Restaurant.where(
 			'latitude > ? AND latitude < ? AND longitude > ? AND longitude < ?',
 			minlat, maxlat, minlng, maxlng);
 
 		render :json => 
 						{
 							response: @searchRestaurant,
-							originalUri: request.protocol + request.host_with_port + "/Image/"
+							originalUri: request.protocol + request.host_with_port + "/image/"
 						}.to_json,
 						:callback => params[:callback] and return;
-	end
-
-	def register
 	end
 
 	def user
 		if(request.get? && cookies[:user] == nil)
 			redirect_to root_url and return;
 		else
-			@loginUser = Users.find_by(userId: cookies[:user]);
+			@loginUser = User.find_by(userId: cookies[:user]);
 		end
 	end
 end
