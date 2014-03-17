@@ -41,7 +41,7 @@ class RestaurantController < ApplicationController
 			@hour.push(h);
 		end
 
-		Dir.glob('/image/restaurant detail/' << "belgoimgs" << '/*').each do |file|
+		Dir.glob('public/image/restaurant detail/' << detail.imageFolder << '/*').each do |file|
 			@image.push("/" << file.split('/')[1..-1].join('/'))
 		end
 	end
