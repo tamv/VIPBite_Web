@@ -41,10 +41,8 @@ class RestaurantController < ApplicationController
 			@hour.push(h);
 		end
 
-		@image.push("/image/restaurant detail/belgoimgs/belgo.jpg");
-
 		Dir.glob('/image/restaurant detail/' << "belgoimgs" << '/*').each do |file|
-			@image.push("/image/restaurant detail/belgoimgs/belgo.jpg");
+			@image.push("/" << file.split('/')[1..-1].join('/'))
 		end
 	end
 end
