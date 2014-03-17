@@ -10,15 +10,15 @@
 
 	<%= favicon_link_tag 'favicon.ico' %>
 
-	<%= javascript_include_tag 'jquery' %>
 	<%= javascript_include_tag 'application'%>
+
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
 	</script>
-	<script src="http://jquery.bassistance.de/validate/lib/jquery-1.9.0.js"></script>
+
 	<%= stylesheet_link_tag 'application' %>
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic'rel='stylesheet' type='text/css'>
 	<title>VIPBite</title>
 </head>
 <body>
@@ -103,6 +103,10 @@
 			{
 				VIPBiteWeb.ScrollToTag(localStorage.getItem("scrollTo"));
 			}
+			$('.imageGal').nivoLightbox({ effect: 'fade' });
+
+			$(".row").css("display", "none");
+		$(".row").fadeIn(1200);
 	});
 	</script>
 </body>

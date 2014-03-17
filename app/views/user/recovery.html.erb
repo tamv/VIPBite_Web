@@ -12,10 +12,11 @@
 		</div>
 		<div class="row">
 			<div class="col-md-7">
-				<form>
-						<input name="email" type="email" placeholder="email address" />
-						<input type="submit" name="submit" value="Submit" class="submit" /> 
-				</form>	
+				<%= form_tag ({:controller => 'user', :action => 'recovery', :method => "post"}), ({:id => 'recoveryForm'}) do %>
+						<%= email_field_tag('email', params[:email] || nil, maxlength: 30, size: 30,
+											:class=>"registrationInput", placeholder: "Email Address", required: "required") %>
+						<%= submit_tag('submit', :class=>"submit") %>
+				<% end %>
 			</div>
 			<div class="col-md-5">
 				<div class="sideBar">

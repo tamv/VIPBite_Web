@@ -22,6 +22,7 @@ class RestaurantController < ApplicationController
 		@phone = overview.phone;
 		@lat = overview.latitude;
 		@lng = overview.longitude;
+		@logo = overview.imageUrl;
 		@web = detail.link;
 		@reservation = detail.reservation;
 		@hour = [];
@@ -40,8 +41,10 @@ class RestaurantController < ApplicationController
 			@hour.push(h);
 		end
 
-		Dir.glob('/image/restaurant/' << detail.imageFolder << '/*').each do |file|
-			@image.push("/" << file.split('/')[1..-1].join('/'));
+		@image.push("/image/restaurant detail/belgoimgs/belgo.jpg");
+
+		Dir.glob('/image/restaurant detail/' << "belgoimgs" << '/*').each do |file|
+			@image.push("/image/restaurant detail/belgoimgs/belgo.jpg");
 		end
 	end
 end

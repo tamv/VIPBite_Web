@@ -33,7 +33,7 @@ class MobileController < ApplicationController
 			render	:json => 
 							{
 								response: @searchRestaurant, 
-								originalUri: request.protocol + request.host_with_port + "/image/"
+								originalUri: request.protocol + request.host_with_port + "/image/restaurant logo/"
 							}.to_json,
 							:callback => params[:callback] and return;
 		else
@@ -62,7 +62,7 @@ class MobileController < ApplicationController
 
 		@Images = []
 
-		Dir.glob("public/image/restaurant/" << rest_info.imgFolder << "/*").each do |file|
+		Dir.glob("public/image/restaurant detail/" << rest_info.imgFolder << "/*").each do |file|
 				@Images.push("/" << file.split('/')[2..-1].join('/'))
 		end
 

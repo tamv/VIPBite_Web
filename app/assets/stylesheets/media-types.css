@@ -97,7 +97,9 @@
 	}
 	
 	.imageItem{
-		margin-bottom:30px;
+		margin: 0 auto;
+		text-align: center;
+		vertical-align: baseline;
 	}
 }
 	

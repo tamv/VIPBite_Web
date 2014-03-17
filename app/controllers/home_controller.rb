@@ -32,6 +32,8 @@ class HomeController < ApplicationController
 	end
 
 	def contactus
+		Vipbitemailer.InterestedPartner(params[:name], params[:email], params[:address]).deliver;
+		redirect_to(root_url) and return;
 	end
 
 	private

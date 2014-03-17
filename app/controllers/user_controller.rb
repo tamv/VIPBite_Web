@@ -20,16 +20,24 @@ class UserController < ApplicationController
 
 		if(success != false)
 			success = Transaction.PurchaseSubscription(
-				:firstname		=> params[:noc_firstname],	:lastname				=> params[:noc_lastname],
-				:cardno				=> params[:cardno],					:cardtype				=> params[:cardtype],
-				:cvv					=> params[:cvv],						:exp_month			=> params[:exp_month],
+				:firstname		=> params[:noc_firstname],	:lastname			=> params[:noc_lastname],
+				:cardno				=> params[:cardno],					:cardtype			=> params[:cardtype],
+				:cvv					=> params[:cvv],						:exp_month		=> params[:exp_month],
 				:exp_year			=> params[:exp_year],				:price				=> 90,
 				:ipAddress		=> request.remote_ip,				:address			=> params[:address],
 				:city					=> params[:city],						:province			=> params[:prov],
-				:postal				=> params[:postal]);
+				:postal				=> params[:postal],					:email 				=> params[:email],
+				:subscription	=> params[:memberType]);
 
 			if (success != nil && success[:complete] == true)
 				User.UpdateExpDate(params[:email], params[:memberType], (params[:address] + params[:prov] + params[:postal]));
+				
+				Vipbitemailer.ConfirmRegistration(
+								:email 				=> params[:email],
+								:firstname => params[:firstname], :lastname => params[:lastname],
+								:subscription => params[:memberType], :cost => 90,
+								:confirmationcode => success[:confCode]);
+
 				redirect_to(root_url) and return;
 			elsif success == nil
 				flash[:warning] = "(FAILURE TO VALIDATE YOUR CREDIT CARD! PLEASE TRY AGAIN)";
@@ -49,19 +57,32 @@ class UserController < ApplicationController
 			return;
 		end
 		
-		user = User.find_by(userId: cookies[:userId]);
+		user = User.find_by(userId: cookies[:user]);
+
+		if(user == nil)
+
+			return;
+		end
 
 		success = Transaction.PurchaseSubscription(
-				:firstname		=> params[:noc_firstname],	:lastname				=> params[:noc_lastname],
-				:cardno				=> params[:cardno],					:cardtype				=> params[:cardtype],
-				:cvv					=> params[:cvv],						:exp_month			=> params[:exp_month],
+				:firstname		=> params[:noc_firstname],	:lastname			=> params[:noc_lastname],
+				:cardno				=> params[:cardno],					:cardtype			=> params[:cardtype],
+				:cvv					=> params[:cvv],						:exp_month		=> params[:exp_month],
 				:exp_year			=> params[:exp_year],				:price				=> 90,
 				:ipAddress		=> request.remote_ip,				:address			=> params[:address],
 				:city					=> params[:city],						:province			=> params[:prov],
-				:postal				=> params[:postal]);
+				:postal				=> params[:postal],					:email 				=> user.userEmail,
+				:subscription	=> params[:memberType]);
 
 		if (success != nil && success[:complete] == true)
 			User.UpdateExpDate(user.userEmail, params[:memberType], (params[:address] + params[:prov] + params[:postal]));
+
+			Vipbitemailer.ConfirmRenewal(
+								:email => user.userEmail,
+								:firstname => params[:firstname], :lastname => params[:lastname],
+								:subscription => params[:memberType], :cost => 90,
+								:confirmationcode => success[:confCode]);
+
 			redirect_to(root_url) and return;
 		elsif success.nil?
 			flash[:warning] = "(FAILURE TO VALIDATE YOUR CREDIT CARD! PLEASE TRY AGAIN)";
@@ -79,5 +100,21 @@ class UserController < ApplicationController
 	end
 
 	def recovery
+		user = User.find_by(userEmail: params[:email]);
+
+		if(user == nil)
+			flash[:warning] = "can't find the correct email in our application";
+			return;
+		end
+
+		newEncrypted = User.ResetPassword(user.userId);
+
+		Vipbitemailer.RecoveryEmail(
+				:firstname => user.firstname,
+				:lastname => user.lastname,
+				:email => params[:email],
+				:newpassword => newEncrypted);
+
+		redirect_to(root_url);
 	end
 end

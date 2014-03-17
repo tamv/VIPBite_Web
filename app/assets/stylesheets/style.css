@@ -407,7 +407,7 @@ a:hover{
 
 .imageGallery{
 	overflow:hidden;
-	margin-bottom:10px;
+	max-height: 170px;
 }
 
 .imageItem{
@@ -417,7 +417,30 @@ a:hover{
 	text-align:center;
 }
 
+.fa-check{
+	color:#45b354;
+}
+
+.fa-times{
+	color:#b34545;
+}
+
+.active{
+	font-size:25px;
+}
+
+.validation{
+	list-style-type:none;
+	margin:0px;
+	padding:0px; 
+	padding:20px;
+	background:#efefef;
+}
 
 .clear{
 	clear:both;
+}
+
+.button{
+	color
 }

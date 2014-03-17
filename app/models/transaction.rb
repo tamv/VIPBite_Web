@@ -36,7 +36,14 @@ class Transaction < ActiveRecord::Base
 
 			if response.success?
 				paypalGateWay.capture(params[:price], response.authorization);
-				return {complete: response.success?};
+
+				confirmationCode = SecureRandom.urlsafe_base64(7, false);
+				Transaction.create(
+						:identifier			=> confirmationCode,
+						:userId					=> params[:email],
+						:subscription		=> params[:scription],
+						:billingAddress	=> billing);
+				return {complete: response.success?, confCode: confirmationCode};
 			else
 				return {conplete: response.success?, :message => response.message};
 			end
